@@ -25,3 +25,4 @@ HandTracker это проект состоящий из программ, кот
 
 ![](https://github.com/TheBestChelik/Handtracker/blob/main/img/HandTracker.gif?raw=true)
 ## Запуск проекта
+Скоро тут будет инструкция по установке
