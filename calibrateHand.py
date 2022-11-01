@@ -1,5 +1,3 @@
-from ast import Call
-from sqlite3 import Time
 import cv2
 import time
 import HandTrackerModule as htm
