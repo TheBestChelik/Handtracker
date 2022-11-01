@@ -7,20 +7,23 @@ import math
 from ctypes import cast, POINTER
 from comtypes import CLSCTX_ALL
 from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
+import sys
 wCam,hCam = 640,480
 MinValue = 0
 MaxValue = 0
-
-with open("config","r") as f:
-    MinValue = float(f.readline())
-    MaxValue = float(f.readline())
-
+try:
+    with open("config","r") as f:
+        MinValue = float(f.readline())
+        MaxValue = float(f.readline())
+except FileNotFoundError:
+    print("You have to run calibration.py at first!")
+    sys.exit()
 devices = AudioUtilities.GetSpeakers()
 interface = devices.Activate(
     IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
 volume = cast(interface, POINTER(IAudioEndpointVolume))
 MinVolume, MaxVolume, _ = volume.GetVolumeRange()
-print(MaxVolume, MinVolume)
+
 
 cap = cv2.VideoCapture(0)
 
@@ -58,7 +61,7 @@ while True:
             cv2.circle(img,(x2,y2),7,(255,0,255),1)
             cv2.line(img,(x1,y1),(x2,y2),(255,0,255),3)
             
-            print(length, PrevValue)
+            
             if TimeLeft<0.1:
                 VolumeLocked = False
                 StartTime = 0
@@ -83,9 +86,7 @@ while True:
             cv2.circle(img,(x2,y2),15,(255,0,255),cv2.FILLED)
             cv2.line(img,(x1,y1),(x2,y2),(255,0,255),3)
             length = math.hypot(x2-x1,y2-y1)
-            #print(length)
             Vol = np.interp(length,[MinValue*1.25,MaxValue*0.75],[MinVolume,MaxVolume])
-            #print(Vol)
             volume.SetMasterVolumeLevel(Vol, None)
             Vol_percent = np.interp(Vol,[MinVolume, MaxVolume],[0,100])
             cv2.putText(img,f"{int(Vol_percent)}%",(x1-40,y1-20),cv2.FONT_HERSHEY_SIMPLEX,1,(255,255,255),2)
@@ -105,13 +106,6 @@ while True:
                 StartTime = 0
                 PrevValue = -7
                 TimeLeft = LockTime
-    # cTime = time.time()
-    # fps = 999
-    # if(cTime!=pTime):
-    #     fps = 1/(cTime-pTime)
-    # pTime = cTime
-    # cv2.putText(img,"FPS: "+str(int(fps)),(10,70),cv2.FONT_HERSHEY_SIMPLEX,3,(255,0,0),3)
-
     cv2.imshow("Cam",img)
     cv2.waitKey(1)
     if cv2.getWindowProperty("Cam",0) == -1:
