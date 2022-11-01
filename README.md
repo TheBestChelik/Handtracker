@@ -1,28 +1,31 @@
+# Table of Contents
+- [Table of Contents](#table-of-contents)
+- [HandTracker](#handtracker)
+  - [MouseControll.py](#mousecontrollpy)
+  - [VolumeControll.py](#volumecontrollpy)
+  - [CalibrateHand.py](#calibratehandpy)
+  - [Additional functions](#additional-functions)
+  - [Installation](#installation)
+
 # HandTracker
-HandTracker это проект состоящий из программ, которые дают возможность управления компьютером с помощью трекинга рук. В основе проекта лежит [MediaPipe Hands](https://google.github.io/mediapipe/solutions/hands) для определения рук и [cv2](https://pypi.org/project/opencv-python/) для захвата изображения. В данный момент в проекте есть 2 основные и одна калибровочная программа.
+HandTracker contains few programs that let user control the computer via hand tracking. The project is based on [MediaPipe Hands](https://google.github.io/mediapipe/solutions/hands) for hand tracking and [cv2](https://pypi.org/project/opencv-python/) for capturing the video from the camera. At the moment there are two main and one calibration program.
 ## MouseControll.py
 ![](https://github.com/TheBestChelik/Handtracker/blob/main/img/MouseControl.gif?raw=true)
-
-Суть первой программы MouseControll.py заключаеться в управлении мышью компьютера с помошью трекинга ладони и пальцев. Используя эту программу можно вообще забыть про мышь и управлять компьютером просто перемещая руку в зоне видимости камеры. Программа следит за положением указательного пальца и интерпретирует его движение в движения мышки на экране. Для того чтобы нажать левую кнопку мыши достаточно опустить средний палец, и чтоб отпустить левую кнопку мыши стоит поднять палец на начальное положения.
+Program monitors the forefinger movements and interprets it to the movement of the mouse on the screen. To press the left button of the mouse you should put down your middle finger, and to release it - return the finger to initial position.
 ## VolumeControll.py
 ![](https://github.com/TheBestChelik/Handtracker/blob/main/img/Volume.gif?raw=true)
 
-Следующая программа VolumeControll.py, котоая изменяет громкость на компьютере, опираясь на растояние между двумя пальцами. Перед использованием необходимо провести калибровку (calibrateHand.py) для корректной роботы программы.
-## calibrateHand.py
+The following program adjusts the volume of the computer based on the distance between the middle and index fingers. Before the usage it is required to run the calibration program (`calibrateHand.py`) for the correct work of the program.
+## CalibrateHand.py
 ![Calibrate](https://github.com/TheBestChelik/Handtracker/blob/main/img/calibrate.gif?raw=true)
 
-Программа калибровки разработана специально для корректной интерпретации данных при использования VolumeControll.py. Программа оснащена подсказками чтобы пользователь мог правильно откалибровать необходимые параметры. При ее использовании пользователь должен находиться на привычном для него расстоянии от камеры.
-## Дополнительные функции
-В проекте так же присутствует HandTrackerModule.py который содержит `class HandDetector()`.
+Calibration program was made for the correct work  of `VolumeControll.py`. For good calibration, the user should be in ordinary distance from the camera.
+## Additional functions
+Likewise, there is `HandTrackerModule.py` that contains `class HandDetector()`. In this class you may find the `FindPos` function that returns the IDs of [hand-landmarks](https://google.github.io/mediapipe/solutions/hands#hand-landmark-model) and their coordinates on the image. 
 
-В нем есть метод `FindPos` который возвращает id [ключевых для определения точек на руке](https://google.github.io/mediapipe/solutions/hands#hand-landmark-model) и их координаты на изображении. 
+In addition, there is a useful `FingersUp` function that specifies the state of the fingers on the hand (finger is up or down). 
 
-Также есть полезный метод `FingersUp` который определяет состояние пальца на руке (поднят или опущен). 
-
-Метод `FindHands` находит руки на изображении и подсвечивает их [ключевые для определения точки](https://google.github.io/mediapipe/solutions/hands#hand-landmark-model)
-## Пример использования
-Отличным примером для использования может послужить файл HandTracker.py, в нем реализовано то с чего стоит начинать создание подобных порограмм. Программа находит все трекер-точки на руке и рисует их на видео.
-
+`FindHands` function finds hands on images and highlights their [hand-landmarks](https://google.github.io/mediapipe/solutions/hands#hand-landmark-model)
 ![](https://github.com/TheBestChelik/Handtracker/blob/main/img/HandTracker.gif?raw=true)
-## Запуск проекта
-Скоро тут будет инструкция по установке
+
+## Installation
