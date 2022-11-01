@@ -3,3 +3,5 @@ mediapipe==0.8.11
 numpy==1.23.4
 pywin32==304
 pypiwin32==223
+comtypes==1.1.14
+pycaw==20220416
